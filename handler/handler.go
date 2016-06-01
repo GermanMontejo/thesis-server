@@ -24,6 +24,8 @@ func PostStudentInfo(w http.ResponseWriter, r *http.Request) {
 	pgsql := utils.InitializeDB()
 	repo := Repository{pgsql}
 	repo.InsertStudent(&student)
+	w.Header().Add("Content-Type","application/json")
+	w.WriteHeader(http.StatusCreated)
 }
 
 func GetStudents(w http.ResponseWriter, r *http.Request) {
@@ -31,5 +33,12 @@ func GetStudents(w http.ResponseWriter, r *http.Request) {
 	repo := Repository{pgsql}
 	students := repo.GetStudents()
 	log.Println("Students:", students)
-
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	j, err := json.Marshal(&students)
+	if err != nil {
+		log.Println("Error in marshaling students to json format.")
+		return
+	}
+	w.Write(j)
 }
