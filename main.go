@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/GermanMontejo/thesis-server/handler"
+	"github.com/thesis-server/handler"
 	"net/http"
 	"log"
 )
